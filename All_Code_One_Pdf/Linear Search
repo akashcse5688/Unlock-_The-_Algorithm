@@ -1,0 +1,29 @@
+#include <stdio.h>
+int linear_search(int arr[], int size, int target) {
+ for (int i = 0; i < size; i++) {
+ if (arr[i] == target) {
+ return i; // Return the index if the target is found
+ }
+ }
+ return -1; // Return -1 if the target is not found}
+int main () {
+ int myArray[] = {1, 4, 2, 7, 5, 9};
+ int arraySize = sizeof(myArray) / sizeof(myArray[0]);
+ int targetElement;
+ printf("Enter the target element to search: ");
+ scanf("%d", &targetElement);
+ int result = linear_search(myArray, arraySize, targetElement);
+ if (result != -1) {
+ printf("Target %d found at index %d.\n", targetElement, result);
+ } else {
+ printf("Target %d not found in the list.\n", targetElement);
+ }
+ return 0;
+}
+Output:
+Enter the target element to search: 5.
+Target 5 found at index 4.
+Enter the target element to search: 3.
+Target 3 not found in the list.
+Enter the target element to search: 9.
+Target 9 found at index 5
