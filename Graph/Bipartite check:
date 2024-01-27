@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+bool dfs(int u, int c, vector<int>& vis, vector<int>& color, vector<vector<int>>& a, int& red_count, int& green_count) {
+    vis[u] = true;
+    color[u] = c;
+    (c == 1) ? red_count++ : green_count++;
+    for (int v = 1; v < vis.size(); v++) {
+        if (a[u][v] && !vis[v]) {
+            if (!dfs(v, -c, vis, color, a, red_count, green_count)) return false;
+        } else if (a[u][v] && vis[v] && color[u] == color[v]) {
+            return false;
+        }
+    }
+    return true;
+}
+int main() {
+    int n;
+    cin >> n;
+    vector<vector<int>> a(n + 1, vector<int>(n + 1));
+    vector<int> vis(n + 1), color(n + 1);
+    int red_count = 0, green_count = 0;
+
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= n; j++)
+            cin >> a[i][j];
+    bool possible = true;
+    for (int i = 1; i <= n; i++) {
+        if (!vis[i]) {
+            red_count = green_count = 0;
+            if (!dfs(i, 1, vis, color, a, red_count, green_count)) {
+                possible = false;
+                break;
+            }
+        }
+    }
+    if (possible) {
+        cout << "Possible! Possible!\n";
+        int a = red_count, b = n - red_count;
+        cout << max(a, b) << " " << min(a, b) << "\n";
+    } else {
+        cout << "Pardon Dear Lord! It is not Possible.\n";
+    }
+    return 0;
+}
